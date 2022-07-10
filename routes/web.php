@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaterkitController;
 use App\Http\Controllers\LanguageController;
-
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GoogleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,7 +41,9 @@ Route::middleware([
     });
 });
 
-
+Route::get('/login/google', [AuthController::class, 'redirectToGoogleProvider'])->name('google.login');//'AuthController@redirectToGoogleProvider');
+Route::get('/login/google/callback', [AuthController::class, 'handleProviderGoogleCallback'])->name('googlr.callback');//'AuthController@handleProviderGoogleCallback');
+Route::get('/post/blog', [GoogleController::class, 'handlePost'])->name('google.post');//'GoogleController@handlePost');
 // locale Route
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
