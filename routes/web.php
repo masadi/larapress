@@ -40,9 +40,11 @@ Route::middleware([
         Route::get('/jam', [StaterkitController::class, 'data_jam'])->name('setting.data_jam');
     });
 });
-
+Route::get('/home', function () {
+    return view('content.home');
+})->name('dashboard');
 Route::get('/login/google', [AuthController::class, 'redirectToGoogleProvider'])->name('google.login');//'AuthController@redirectToGoogleProvider');
-Route::get('/login/google/callback', [AuthController::class, 'handleProviderGoogleCallback'])->name('googlr.callback');//'AuthController@handleProviderGoogleCallback');
+Route::get('/login/google/callback', [AuthController::class, 'handleProviderGoogleCallback'])->name('google.callback');//'AuthController@handleProviderGoogleCallback');
 Route::get('/post/blog', [GoogleController::class, 'handlePost'])->name('google.post');//'GoogleController@handlePost');
 // locale Route
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
