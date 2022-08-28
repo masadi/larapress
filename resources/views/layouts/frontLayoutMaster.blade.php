@@ -82,15 +82,16 @@
   </main>
   <footer id="footer" class="footer">
     <?php $tautan = tautan() ?>
+    <section id="kontak" class="kontak"></section>
     <div class="footer-top">
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-info">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{url('/')}}" class="logo d-flex align-items-center">
               <img src="{{asset('assets/img/logo.png')}}" alt="">
-              <span>Yayasan Darul Karomah</span>
+              <span>Cyber Electra &trade;</span>
             </a>
-            <p>Komplek Pon-Pes Darul Karomah Dusun Bicabbi 1 Desa Larangan Luar Kec. Larangan Kab. Pamekasan 69384.</p>
+            <p>(Ruko Sipon Alleyra) Taman Royal 1, Jl. Irigasi Sipon, Kel. Buaran Indah Kec. Tangerang, Kota Tangerang, Banten, 15119</p>
             <div class="social-links mt-3">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -119,7 +120,7 @@
 
           <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
             <h4>Video</h4>
-            <iframe src="https://www.youtube.com/embed/j78jIbOH9D0" title="SEMARAK IDUL ADHA DI PON-PES DARUL KAROMAH" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            
 
           </div>
 
