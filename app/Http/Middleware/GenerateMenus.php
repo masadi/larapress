@@ -25,23 +25,23 @@ class GenerateMenus
                 ],
                 [
                     'name' => 'Fitur',
-                    'url'=> 'javascript:void(0)',
+                    'url'=> '#fitur',
                 ],
                 [
                     'name' => 'Harga',
-                    'url'=> 'javascript:void(0)',
+                    'url'=> '#harga',
                 ],
                 [
                     'name' => 'Klien',
-                    'url'=> 'javascript:void(0)',
+                    'url'=> '#klien',
                 ],
                 [
                     'name' => 'FAQ',
-                    'url'=> 'javascript:void(0)',
+                    'url'=> '#faq',
                 ],
                 [
                     'name' => 'Kontak',
-                    'url'=> 'javascript:void(0)',
+                    'url'=> '#kontak',
                 ],
                 [
                     'name' => 'Login',
