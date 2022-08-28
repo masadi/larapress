@@ -8,6 +8,14 @@
       <div class="col-lg-6 d-flex flex-column justify-content-center">
         <h1 data-aos="fade-up">We offer modern solutions for growing your business</h1>
         <h2 data-aos="fade-up" data-aos-delay="400">We are team of talented designers making websites with Bootstrap</h2>
+        <div data-aos="fade-up" data-aos-delay="600">
+          <div class="text-center text-lg-start">
+            <a href="#fitur" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+              <span>Get Started</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
       </div>
       <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
         <img src="assets/img/hero-img.png" class="img-fluid" alt="">
@@ -121,7 +129,7 @@
                 <li class="na">Pharetra massa</li>
                 <li class="na">Massa ultricies mi</li>
               </ul>
-              <a href="#" class="btn-buy">Buy Now</a>
+              <a href="#" class="btn btn-lg btn-outline-primary">Buy Now</a>
             </div>
           </div>
 
@@ -181,55 +189,6 @@
 
   </section><!-- End Features Section -->
   <!-- ======= Counts Section ======= -->
-  <section id="klien" class="klien">
-    <div class="container" data-aos="fade-up">
-
-      <div class="row gy-4">
-
-        <div class="col-lg-3 col-md-6">
-          <div class="count-box">
-            <i class="bi bi-people"></i>
-            <div>
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Santri Aktif</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-          <div class="count-box">
-            <i class="bi bi-emoji-smile" style="color: #ee6c20;"></i>
-            <div>
-              <span data-purecounter-start="0" data-purecounter-end="121" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Santri Mukim</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-          <div class="count-box">
-            <i class="bi bi-people" style="color: #15be56;"></i>
-            <div>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Peserta Didik Aktif</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-          <div class="count-box">
-            <i class="bi bi-people" style="color: #bb0852;"></i>
-            <div>
-              <span data-purecounter-start="0" data-purecounter-end="65" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Tenaga Pendidik</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section><!-- End Counts Section -->
   <!-- ======= Portfolio Section ======= -->
   <section id="faq" class="faq">
 
