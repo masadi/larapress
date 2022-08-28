@@ -1,5 +1,5 @@
 
-<body class="horizontal-layout horizontal-menu {{$configData['contentLayout']}} {{$configData['horizontalMenuType']}} {{ $configData['blankPageClass'] }} {{ $configData['bodyClass'] }} {{ $configData['footerType'] }}"
+<body class="horizontal-layout {{$configData['contentLayout']}} {{$configData['horizontalMenuType']}} {{ $configData['blankPageClass'] }} {{ $configData['bodyClass'] }} {{ $configData['footerType'] }}"
 data-open="hover"
 data-menu="horizontal-menu"
 data-col="{{$configData['showMenu'] ? $configData['contentLayout'] : '1-column' }}"
@@ -7,11 +7,11 @@ data-framework="laravel"
 data-asset-path="{{ asset('/')}}">
 
   <!-- BEGIN: Header-->
-  @include('panels.navbar')
+  @include('panels.header')
 
   {{-- Include Sidebar --}}
   @if((isset($configData['showMenu']) && $configData['showMenu'] === true))
-  @include('panels.horizontalMenu')
+  @include('panels.horizontalMenu', ['applClasses' => 'frontEndClasses'])
   @endif
 
   <!-- BEGIN: Content-->
@@ -44,9 +44,15 @@ data-asset-path="{{ asset('/')}}">
       @endif
 
       <div class="content-body">
-
         {{-- Include Page Content --}}
-        @yield('content')
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-12">
+            @yield('content')
+          </div>
+          <div class="col-lg-3 col-md-4 d-sm-none d-md-block">
+            @include('content.sidebar')
+          </div>
+        </div>
       </div>
     </div>
     @endif
@@ -58,6 +64,7 @@ data-asset-path="{{ asset('/')}}">
   <div class="drag-target"></div>
 
   {{-- include footer --}}
+  @include('content.carousel')
   @include('panels/footer')
 
   {{-- include default scripts --}}

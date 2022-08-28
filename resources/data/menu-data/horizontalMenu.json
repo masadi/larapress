@@ -1,7 +1,7 @@
 {
   "menu": [
     {
-      "url": "home",
+      "url": "/",
       "name": "Home",
       "icon": "home",
       "slug": "home"
@@ -14,8 +14,15 @@
       "submenu": [
         {
           "url": "layouts/full",
-          "name": "Layout Full",
-          "slug": "layout-full"
+          "name": "Layout Full Atas",
+          "slug": "layout-full",
+		  "submenu": [
+			{
+			  "url": "layouts/full",
+			  "name": "Layout Full Bawah",
+			  "slug": "layout-full"
+			}
+			]
         },
         {
           "url": "layouts/without-menu",

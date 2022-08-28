@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaterkitController;
-use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\FaceBookController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,38 +16,55 @@ use App\Http\Controllers\GoogleController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-/*Route::get('/', [StaterkitController::class, 'home'])->name('home');
-Route::get('home', [StaterkitController::class, 'home'])->name('home');*/
+Route::prefix('auth')->name('auth.')->group( function(){
+    Route::get('facebook', [FaceBookController::class, 'loginUsingFacebook'])->name('facebook');
+    Route::get('facebook/callback', [FaceBookController::class, 'callbackFromFacebook'])->name('facebook_callback');
+    Route::get('google', [GoogleController::class, 'redirectToGoogle'])->name('google');
+    Route::get('google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google_callback');
+});
+Route::get('/', [FrontController::class, 'index'])->name('home');
+Route::get('/cari', [FrontController::class, 'cari'])->name('cari');
+Route::get('page/{page}', [FrontController::class, 'page'])->name('page');
+Route::get('/post/{slug}', [FrontController::class, 'artikel'])->name('baca_artikel');
+Route::get('/kategori/{slug}', [FrontController::class, 'post_kategori'])->name('kategori');
+Route::get('/tag/{slug}', [FrontController::class, 'post_tag'])->name('tag');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/', function () {
-        return view('content.dashboard');
-    })->name('dashboard');
-    Route::get('/dashboard', function () {
-        return view('content.dashboard');
-    })->name('dashboard');
-    // Route Components
-    Route::get('absensi', [StaterkitController::class, 'absensi'])->name('absensi.index');
-    Route::get('ptk', [StaterkitController::class, 'ptk'])->name('absensi.ptk');
-    Route::get('rekapitulasi', [StaterkitController::class, 'rekapitulasi'])->name('absensi.rekapitulasi');
-    Route::get('pengaturan', [StaterkitController::class, 'pengaturan'])->name('absensi.pengaturan');
-    Route::get('data-sekolah', [StaterkitController::class, 'data_sekolah'])->name('absensi.data_sekolah');
-    Route::group(['prefix' => 'setting'], function(){
-        Route::get('/kategori', [StaterkitController::class, 'data_kategori'])->name('setting.data_kategori');
-        Route::get('/jam', [StaterkitController::class, 'data_jam'])->name('setting.data_jam');
+    Route::get('/dashboard', [StaterkitController::class, 'dashboard'])->name('dashboard');
+    Route::prefix('artikel')->name('artikel.')->group( function(){
+        Route::get('/', [StaterkitController::class, 'artikel'])->name('semua');
+        Route::get('/tambah', [StaterkitController::class, 'tambah_artikel'])->name('tambah');
+        Route::get('komentar', [StaterkitController::class, 'komentar'])->name('komentar');
     });
+    Route::prefix('halaman')->name('halaman.')->group( function(){
+        Route::get('/', [StaterkitController::class, 'halaman'])->name('semua');
+        Route::get('/tambah', [StaterkitController::class, 'tambah_halaman'])->name('tambah');
+    });
+    Route::prefix('referensi')->name('referensi')->group( function(){
+        Route::get('/{laman}', [StaterkitController::class, 'referensi']);
+    });
+    Route::prefix('administrasi')->name('administrasi')->group( function(){
+        Route::get('/{laman}', [StaterkitController::class, 'administrasi']);
+        Route::get('/{laman}/tambah-data', [StaterkitController::class, 'administrasi_add'])->name('.add');
+    });
+    Route::prefix('keuangan')->name('keuangan')->group( function(){
+        Route::get('/{laman}', [StaterkitController::class, 'keuangan']);
+    });
+    Route::prefix('kinerja-guru')->name('kinerja-guru')->group( function(){
+        Route::get('/{laman}', [StaterkitController::class, 'kinerja_guru']);
+    });
+    Route::get('/users', [StaterkitController::class, 'users'])->name('users');
 });
-Route::get('/home', function () {
-    return view('content.home');
-})->name('dashboard');
-Route::get('/login/google', [AuthController::class, 'redirectToGoogleProvider'])->name('google.login');//'AuthController@redirectToGoogleProvider');
-Route::get('/login/google/callback', [AuthController::class, 'handleProviderGoogleCallback'])->name('google.callback');//'AuthController@handleProviderGoogleCallback');
-Route::get('/post/blog', [GoogleController::class, 'handlePost'])->name('google.post');//'GoogleController@handlePost');
-// locale Route
-Route::get('lang/{locale}', [LanguageController::class, 'swap']);
+Route::get('send-mail', function () {
+    $details = [
+        'title' => 'Mail from ItSolutionStuff.com',
+        'body' => 'This is for testing email using smtp'
+    ];
+    \Mail::to('akun.temporary83@gmail.com')->send(new \App\Mail\KirimEmail($details));
+    dd("Email is Sent.");
+});
 
 

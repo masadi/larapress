@@ -6,15 +6,18 @@
 @endif
 
 @yield('vendor-style')
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
 <!-- END: Vendor CSS-->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- BEGIN: Theme CSS-->
 <link rel="stylesheet" href="{{ asset(mix('css/core.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('css/base/themes/dark-layout.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('css/base/themes/bordered-layout.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('css/base/themes/semi-dark-layout.css')) }}" />
 
-@php $configData = Helper::applClasses(); @endphp
+@php 
+$configData = Helper::{$applClasses}(); 
+@endphp
 
 <!-- BEGIN: Page CSS-->
 @if ($configData['mainLayoutType'] === 'horizontal')
@@ -39,5 +42,5 @@
   {{-- user custom styles --}}
   <link rel="stylesheet" href="{{ asset(mix('css/style.css')) }}" />
 @endif
-
+@stack('styles')
 @livewireStyles

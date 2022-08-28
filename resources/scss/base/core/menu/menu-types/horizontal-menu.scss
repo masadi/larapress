@@ -420,7 +420,7 @@
   // navbar static
   &.navbar-static {
     .app-content {
-      padding: calc(#{$content-padding} + #{$horizontal-menu-height}) #{$content-padding} 0 #{$content-padding};
+      /*padding: calc(#{$content-padding} + #{$horizontal-menu-height}) #{$content-padding} 0 #{$content-padding};*/
     }
     .content {
       min-height: calc(100% - calc(#{$horizontal-menu-height} + calc(#{$footer-height} + 0.2rem)));

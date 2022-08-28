@@ -166,7 +166,7 @@ return [
         /**
          * Define if the laratrust middleware are registered automatically in the service provider
          */
-        'register' => true,
+        'register' => false,
 
         /**
          * Method to be called in the middleware return case.
@@ -213,7 +213,7 @@ return [
         | Please check the docs to see what you need to do in case you have the package already configured.
         |
         */
-        'enabled' => true,
+        'enabled' => false,
 
         /*
         |--------------------------------------------------------------------------
@@ -226,7 +226,7 @@ return [
         | it will check only if the user has attached that role/permission ignoring the team.
         |
         */
-        'strict_check' => true,
+        'strict_check' => false,
     ],
 
     /*

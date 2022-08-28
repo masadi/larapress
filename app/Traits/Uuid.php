@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits;
+use Illuminate\Support\Facades\Schema;
 use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
 use Ramsey\Uuid\Uuid as Generator;
 trait Uuid

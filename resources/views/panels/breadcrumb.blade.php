@@ -1,10 +1,10 @@
+@isset($breadcrumbs)
 <div class="content-header row">
   <div class="content-header-left col-md-9 col-12 mb-2">
     <div class="row breadcrumbs-top">
       <div class="col-12">
         <h2 class="content-header-title float-start mb-0">@yield('title')</h2>
         <div class="breadcrumb-wrapper">
-          @if(@isset($breadcrumbs))
           <ol class="breadcrumb">
               {{-- this will load breadcrumbs dynamically from controller --}}
               @foreach ($breadcrumbs as $breadcrumb)
@@ -19,16 +19,20 @@
               </li>
               @endforeach
           </ol>
-          @endisset
         </div>
       </div>
     </div>
   </div>
-  @if(isset($tombol_add))
+  @endisset
+  @isset($tombol_add)
   <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
     <div class="mb-1 breadcrumb-right">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Tambah Data</button>
+      @isset($tombol_add['link'])
+      <a href="{{$tombol_add['link']}}" class="btn btn-primary">Tambah Data</a>
+      @else
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Tambah Data</button>
+      @endif
     </div>
   </div>
-  @endif
 </div>
+@endisset

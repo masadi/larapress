@@ -28,20 +28,20 @@ class LaratrustSeeder extends Seeder
 
         $mapPermission = collect(config('laratrust_seeder.permissions_map'));
 
-        foreach ($config as $key => $modules) {
+        foreach ($config as $module) {
 
             // Create a new role
             $role = \App\Models\Role::firstOrCreate([
-                'name' => $key,
-                'display_name' => ucwords(str_replace('_', ' ', $key)),
-                'description' => ucwords(str_replace('_', ' ', $key))
+                'name' => $module['name'],
+                'display_name' => $module['display_name'],
+                'description' => $module['description'],
             ]);
             $permissions = [];
 
-            $this->command->info('Creating Role '. strtoupper($key));
+            $this->command->info('Creating Role '. $module['name']);
 
             // Reading role permission modules
-            foreach ($modules as $module => $value) {
+            foreach ($module['permission'] as $module => $value) {
 
                 foreach (explode(',', $value) as $p => $perm) {
 

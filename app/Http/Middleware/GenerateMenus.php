@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class GenerateMenus
 {
@@ -16,41 +17,216 @@ class GenerateMenus
      */
     public function handle(Request $request, Closure $next)
     {
-        $text_class = ['class' => 'd-flex align-items-center'];
-        \Menu::make('MyNavBar', function ($menu) use ($text_class, $request){
-            $menu->add('Beranda')->data('role', ['administrator', 'ptk', 'pd'])->append('</span>')->prepend($this->icon('home'))->link->attr($text_class);
-            //$menu->add('Pengaturan', 'pengaturan')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('settings'))->link->attr($text_class);
-            $menu->add('Sekolah', 'data-sekolah')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('server'))->link->attr($text_class);
-            $menu->add('PTK', 'ptk')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('users'))->link->attr($text_class);
-            $menu->add('Proses Absensi', 'absensi')->data('role', ['ptk', 'pd'])->append('</span>')->prepend($this->icon('user-check'))->link->attr($text_class);
-            $menu->add('Rekapitulasi', 'rekapitulasi')->data('role', ['administrator', 'ptk', 'pd'])->append('</span>')->prepend($this->icon('list'))->link->attr($text_class);
-            $menu->add('Pengaturan', 'javascript:void(0)')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('mail'))->link->attr($text_class);
-            $menu->pengaturan->add('Kategori', 'setting/kategori')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('circle'))->link->attr($text_class);
-            $menu->pengaturan->add('Jam', 'setting/jam')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('circle'))->link->attr($text_class);
-            //$menu->pageLayouts->add('Without Menu', 'layouts/without-menu')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('circle'))->link->attr($text_class);
-            //$menu->pageLayouts->add('Layout Empty', 'layouts/empty')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('circle'))->link->attr($text_class);
-            //$menu->pageLayouts->add('Layout Blank', 'layouts/blank')->data('role', ['administrator'])->append('</span>')->prepend($this->icon('circle'))->link->attr($text_class);
-            $menu->add('Profile', 'user/profile')->data('role', ['administrator', 'ptk', 'pd'])->append('</span>')->prepend($this->icon('user'))->link->attr($text_class);
-            $menu->add('Keluar Aplikasi', 'logout')->data('role', ['administrator', 'ptk', 'pd'])->append('</span>')->prepend($this->icon('power'))->link->attr([
-                'class'         => 'd-flex align-items-center text-danger',
-                'onclick'   => 'event.preventDefault(); document.getElementById(\'logout-form\').submit();',
-            ]);
-            /*
-            <a class="dropdown-item" href="http://absensi.test/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power me-50"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg> Logout
-          </a>
-            */
-        })->filter(function($item) use ($request){
-            $user = auth()->user();
-            $semester = $request->session()->get('semester_id');
-            if($user && $user->hasRole( $item->data('role'), $semester)) {
+        \Menu::make('NavbarUtama', function ($m) {
+            $menus = [
+                [
+                    'name' => 'Beranda',
+                    'url'=> url('/'),
+                ],
+                [
+                    'name' => 'Fitur',
+                    'url'=> 'javascript:void(0)',
+                ],
+                [
+                    'name' => 'Harga',
+                    'url'=> 'javascript:void(0)',
+                ],
+                [
+                    'name' => 'Klien',
+                    'url'=> 'javascript:void(0)',
+                ],
+                [
+                    'name' => 'FAQ',
+                    'url'=> 'javascript:void(0)',
+                ],
+                [
+                    'name' => 'Kontak',
+                    'url'=> 'javascript:void(0)',
+                ],
+                [
+                    'name' => 'Login',
+                    'url'=> route('login'),
+                    'loggedin' => (auth()->user()) ? true : false,
+                ],
+                [
+                    'name' => 'Dashboard',
+                    'url'=> route('dashboard'),
+                    'loggedin' => (auth()->user()) ? false : true,
+                ],
+            ];
+            foreach($menus as $menu){
+                $array = ['url' => $menu['url'], 'class' => 'nav-item'];
+                $dropdown = '';
+                if(isset($menu['submenu'])){
+                    $dropdown = ' dropdown-toggle';
+                    $array = ['url' => $menu['url'], 'class' => 'nav-item dropdown'];
+                }
+                $loggedin = NULL;
+                if(isset($menu['loggedin'])){
+                    $dropdown = $dropdown.' getstarted';
+                    $loggedin = $menu['loggedin'];
+                }
+                $m->add($menu['name'], $array)
+                ->data(['loggedin' => $loggedin])
+                ->append('</span>')
+                ->prepend('<span>')
+                ->link->attr([
+                    'class'         => 'nav-link d-flex align-items-center'.$dropdown,
+                ]);
+                if(isset($menu['submenu'])){
+                    $this->submenus($menu['submenu'], $menu, $m);
+                }
+            }
+        })->filter(function($item){
+            if($item->data('loggedin')){
+                return false;
+            } else {
                 return true;
             }
-            return false;
+        });
+        \Menu::make('MyNavBar', function ($m) {
+            $menus = [
+                [
+                    'name' => 'Home',
+                    'url' => 'dashboard',
+                    'icon' => '<i class="fa-solid fa-house"></i>',
+                    'roles' => '',
+                    'attr' => $this->text_class(),
+                ],
+                [
+                    'name' => 'Nomor Whatsapp',
+                    'url' => 'nomor-whatsapp',
+                    'icon' => '<i class="fa-brands fa-whatsapp"></i>',
+                    'roles' => '',
+                    'attr' => $this->text_class(),
+                ],
+                [
+                    'name' => 'Pesan',
+                    'url' => 'pesan',
+                    'icon' => '<i class="fa-solid fa-comments"></i>',
+                    'roles' => '',
+                    'attr' => $this->text_class(),
+                ],
+                [
+                    'name' => 'Data Pengguna',
+                    'url'  => 'users',
+                    'icon' => '<i class="fa-solid fa-users"></i>',
+                    'roles'	=> 'administrator',
+                    'attr' => $this->text_class(),
+                ],
+                [
+                    'name' => 'Profil Pengguna',
+                    'url'  => 'user/profile',
+                    'icon' => '<i class="fa-solid fa-user"></i>',
+                    'roles'	=> '',
+                    'attr' => $this->text_class(),
+                ],
+                [
+                    'name' => 'Keluar Aplikasi',
+                    'url'  => 'logout',
+                    'icon' => '<i class="fa-solid fa-power-off"></i>',
+                    'roles'	=> '',
+                    'attr' => $this->text_class('danger', 'event.preventDefault(); document.getElementById(\'logout-form\').submit();'),
+                ],
+            ];
+            foreach($menus as $menu){
+                if(isset($menu['badge'])){
+                    $m->add($menu['name'], $menu['url'])
+                    ->data(['roles' => $menu['roles']])
+                    ->append($this->setAppend($menu['badge']->first(), $menu['badge']->last()))
+                    ->prepend($this->icon($menu['icon']))
+                    ->link->attr($menu['attr']);
+                } else {
+                    $m->add($menu['name'], $menu['url'])->data(['roles' => $menu['roles']])->append($this->setAppend())->prepend($this->icon($menu['icon']))->link->attr($menu['attr']);
+                }
+                if(isset($menu['submenu'])){
+                    foreach($menu['submenu'] as $submenu){
+                        $this->submenu($submenu, $menu, $m);
+                        if(isset($submenu['submenu'])){
+                            foreach($submenu['submenu'] as $sub_submenu){
+                                $this->submenu($sub_submenu, $submenu, $m);       
+                            }
+                        }
+                    }
+                }
+            }
+        })->filter(function($item){
+            if(auth()->user()){
+                if($item->data('roles')){
+                    if(auth()->user()->hasRole( $item->data('roles'), session('tahun-ajaran'))) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
         });
         return $next($request);
     }
-    public function icon($icon){
-        return '<i data-feather="'.$icon.'"></i><span class="menu-title text-truncate">';
+    private function icon($icon){
+        return $icon.'<span class="menu-title text-truncate">';
+    }
+    private function text_class($color = NULL, $onclick = NULL){
+        if($onclick){
+            if($color){
+                return [
+                    'class' => 'd-flex align-items-center text-'.$color,
+                    'onclick' => $onclick,
+                    'title' => 'asd',
+                ];
+            } else {
+                return [
+                    'class' => 'd-flex align-items-center',
+                    'onclick' => $onclick,
+                ];
+            }
+        } else {
+            if($color){
+                return ['class' => 'd-flex align-items-center text-'.$color];
+            } else {
+                return [
+                    'class' => 'd-flex align-items-center',
+                ];
+            }
+        }
+    }
+    private function badge($color, $text){
+        return '<span class="badge rounded-pill badge-light-'.$color.' ms-auto me-1">'.$text.'</span>';
+    }
+    private function setAppend($color = NULL, $text = NULL){
+        if($color){
+            return '</span>'.$this->badge($color, $text);
+        } else {
+            return '</span>';
+        }
+    }
+    private function submenu($submenu, $menu, $m){
+        if(isset($submenu['badge'])){
+            $m->{Str::camel(Str::ascii($menu['name']))}->add($submenu['name'], $submenu['url'])->data(['roles' => $submenu['roles']])->append($this->setAppend($submenu['badge']->first(), $submenu['badge']->last()))->prepend($this->icon($submenu['icon']))->link->attr($submenu['attr']);
+        } else {
+            $m->{Str::camel(Str::ascii($menu['name']))}->add($submenu['name'], $submenu['url'])->data(['roles' => $submenu['roles']])->append($this->setAppend())->prepend($this->icon($submenu['icon']))->link->attr($submenu['attr']);
+        }
+    }
+    private function submenus($menus, $parrent, $m){
+        foreach($menus as $menu){
+            $array = ['url' => $menu['url'], 'class' => 'nav-item'];
+            $dropdown = '';
+            if(isset($menu['submenu'])){
+                $dropdown = ' dropdown-toggle';
+                $array = ['url' => $menu['url'], 'class' => 'dropdown dropdown-submenu', 'data-menu' => 'dropdown-submenu'];
+            }
+            $m->{Str::camel(Str::ascii($parrent['name']))}->add($menu['name'], $array)
+            ->append('</span>')
+            ->prepend('<span>')
+            ->link->attr([
+                'class'         => 'dropdown-item d-flex align-items-center'.$dropdown,
+                'data-bs-toggle' => ($dropdown) ? 'dropdown' : '',
+            ]);
+            if(isset($menu['submenu'])){
+                $this->submenus($menu['submenu'], $menu, $m);
+            }
+        }
     }
 }

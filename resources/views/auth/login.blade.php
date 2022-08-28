@@ -8,21 +8,17 @@
 @endsection
 
 @section('content')
-<?php
-$semester = \App\Models\Semester::get();
-?>
   <div class="auth-wrapper auth-basic px-2">
     <div class="auth-inner my-2">
       <!-- Login basic -->
       <div class="card mb-0">
         <div class="card-body">
-          <a href="#" class="brand-logo">
-          <img src="{{asset('images/logo.png')}}" alt="logo" srcset="" style="height:28px">
-            <h2 class="brand-text text-primary ms-1">{{config('app.name')}}</h2>
+          <a href="{{url('/')}}" class="brand-logo">
+            <img src="{{asset('images/logo.png')}}" alt="Logo" class="mx-auto d-block" width="100">
           </a>
 
-          <h4 class="card-title mb-1">Selamat Datang! 👋</h4>
-          <p class="card-text mb-2">Silahkan masuk ke akun Anda!</p>
+          <h4 class="card-title mb-1 text-center">Selamat Datang di Darul Karomah</h4>
+          <p class="card-text mb-2 text-center">Silahkan login untuk mengakses Aplikasi</p>
 
           @if (session('status'))
             <div class="alert alert-success mb-1 rounded-0" role="alert">
@@ -37,7 +33,7 @@ $semester = \App\Models\Semester::get();
             <div class="mb-1">
               <label for="login-email" class="form-label">Email</label>
               <input type="text" class="form-control @error('email') is-invalid @enderror" id="login-email" name="email"
-                placeholder="john@example.com" aria-describedby="login-email" tabindex="1" autofocus
+                placeholder="admin@darulkaromah.sch.id" aria-describedby="login-email" tabindex="1" autofocus
                 value="{{ old('email') }}" />
               @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -63,23 +59,14 @@ $semester = \App\Models\Semester::get();
               </div>
             </div>
             <div class="mb-1">
-              <label for="semester" class="form-label">Tahun Pelajaran</label>
-              <select name="semester" id="semester" class="form-control form-control-merge">
-                @foreach($semester as $s)
-                <option value="{{$s->semester_id}}" {{($s->periode_aktif) ? 'selected' : ''}}>{{$s->nama}}</option>
-                @endforeach
-              </select>
-            </div>
-            <div class="mb-1">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="remember" name="remember" tabindex="3"
-                  {{ old('remember') ? 'checked' : '' }} />
-                <label class="form-check-label" for="remember"> Simpan login </label>
+                <input class="form-check-input" type="checkbox" id="remember" name="remember" tabindex="3" />
+                <label class="form-check-label" for="remember-me"> Remember Me </label>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100" tabindex="4">Sign in</button>
+            <button type="submit" class="btn btn-primary w-100" tabindex="4">Masuk Aplikasi</button>
           </form>
-          <!--
+
           <p class="text-center mt-2">
             <span>New on our platform?</span>
             @if (Route::has('register'))
@@ -90,24 +77,23 @@ $semester = \App\Models\Semester::get();
           </p>
 
           <div class="divider my-2">
-            <div class="divider-text">or</div>
+            <div class="divider-text">Atau Masuk dengan</div>
           </div>
 
           <div class="auth-footer-btn d-flex justify-content-center">
-            <a href="#" class="btn btn-facebook">
+            <a href="{{ route('auth.facebook') }}" class="btn btn-facebook">
               <i data-feather="facebook"></i>
             </a>
             <a href="#" class="btn btn-twitter white">
               <i data-feather="twitter"></i>
             </a>
-            <a href="#" class="btn btn-google">
-              <i data-feather="mail"></i>
+            <a href="{{ route('auth.google') }}" class="btn btn-google">
+              <i class="fa-brands fa-google"></i>
             </a>
             <a href="#" class="btn btn-github">
               <i data-feather="github"></i>
             </a>
           </div>
-          -->
         </div>
       </div>
       <!-- /Login basic -->

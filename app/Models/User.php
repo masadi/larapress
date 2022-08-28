@@ -25,7 +25,15 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'google_id',
+        'facebook_id',
+        'ptk_id',
+        'peserta_didik_id'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -56,12 +64,4 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
-    public function ptk()
-    {
-        return $this->hasOne(Ptk::class, 'user_id', 'id');
-    }
-    public function sekolah()
-    {
-        return $this->hasOne(Sekolah::class, 'sekolah_id', 'sekolah_id');
-    }
 }
