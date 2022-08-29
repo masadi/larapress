@@ -47,7 +47,7 @@ class StaterkitController extends Controller
         return view('content.general', ['breadcrumbs' => $breadcrumbs, 'title' => $title, 'laman' => 'whatsapp.auto-reply']);
     }
     public function auction(){
-        $title = "Auction";
+        $title = "Lelang";
         $breadcrumbs = [
             ['link' => "home", 'name' => "Beranda"], ['name' => $title]
         ];

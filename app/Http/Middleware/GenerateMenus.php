@@ -116,8 +116,8 @@ class GenerateMenus
                     'attr' => $this->text_class(),
                 ],
                 [
-                    'name' => 'Auction',
-                    'url'  => 'auction',
+                    'name' => 'Lelang',
+                    'url'  => 'lelang',
                     'icon' => '<i class="fa-solid fa-person-chalkboard"></i>',
                     'roles'	=> '',
                     'attr' => $this->text_class(),

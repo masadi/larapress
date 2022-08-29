@@ -42,7 +42,7 @@ Route::middleware([
     Route::get('/campaign-message', [StaterkitController::class, 'campaign_message'])->name('campaign-message');
     Route::get('/received-message', [StaterkitController::class, 'received_message'])->name('received-message');
     Route::get('/auto-reply', [StaterkitController::class, 'auto_reply'])->name('auto-reply');
-    Route::get('/auction', [StaterkitController::class, 'auction'])->name('auction');
+    Route::get('/lelang', [StaterkitController::class, 'auction'])->name('auction');
     Route::get('/users', [StaterkitController::class, 'users'])->name('users');
 });
 Route::get('send-mail', function () {
