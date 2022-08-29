@@ -116,9 +116,16 @@ class GenerateMenus
                     'attr' => $this->text_class(),
                 ],
                 [
+                    'name' => 'Auction',
+                    'url'  => 'auction',
+                    'icon' => '<i class="fa-solid fa-person-chalkboard"></i>',
+                    'roles'	=> '',
+                    'attr' => $this->text_class(),
+                ],
+                [
                     'name' => 'Data Pengguna',
                     'url'  => 'users',
-                    'icon' => '<i class="fa-solid fa-users"></i>',
+                    'icon' => '<i class="fa-solid fa-people-line"></i>',
                     'roles'	=> 'administrator',
                     'attr' => $this->text_class(),
                 ],
