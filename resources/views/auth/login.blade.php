@@ -14,10 +14,10 @@
       <div class="card mb-0">
         <div class="card-body">
           <a href="{{url('/')}}" class="brand-logo">
-            <img src="{{asset('images/logo.png')}}" alt="Logo" class="mx-auto d-block" width="100">
+            <img src="{{asset('images/logo.png')}}" alt="Logo" class="mx-auto d-block rounded" width="100">
           </a>
 
-          <h4 class="card-title mb-1 text-center">Selamat Datang di Darul Karomah</h4>
+          <h4 class="card-title mb-1 text-center">Selamat Datang di {{config('app.name')}}</h4>
           <p class="card-text mb-2 text-center">Silahkan login untuk mengakses Aplikasi</p>
 
           @if (session('status'))
@@ -33,7 +33,7 @@
             <div class="mb-1">
               <label for="login-email" class="form-label">Email</label>
               <input type="text" class="form-control @error('email') is-invalid @enderror" id="login-email" name="email"
-                placeholder="admin@darulkaromah.sch.id" aria-describedby="login-email" tabindex="1" autofocus
+                placeholder="yourmail@mail.com" aria-describedby="login-email" tabindex="1" autofocus
                 value="{{ old('email') }}" />
               @error('email')
                 <span class="invalid-feedback" role="alert">

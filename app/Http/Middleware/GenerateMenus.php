@@ -98,13 +98,21 @@ class GenerateMenus
                     'url' => 'nomor-whatsapp',
                     'icon' => '<i class="fa-brands fa-whatsapp"></i>',
                     'roles' => '',
+                    'active' => 'nomor-whatsapp/*',
                     'attr' => $this->text_class(),
                 ],
                 [
-                    'name' => 'Pesan',
-                    'url' => 'pesan',
-                    'icon' => '<i class="fa-solid fa-comments"></i>',
+                    'name' => 'Campaign',
+                    'url' => 'campaign-message',
+                    'icon' => '<i class="fa-solid fa-person-running"></i>',
                     'roles' => '',
+                    'attr' => $this->text_class(),
+                ],
+                [
+                    'name' => 'Auto Reply',
+                    'url'  => 'auto-reply',
+                    'icon' => '<i class="fa-solid fa-headset"></i>',
+                    'roles'	=> '',
                     'attr' => $this->text_class(),
                 ],
                 [
@@ -137,7 +145,11 @@ class GenerateMenus
                     ->prepend($this->icon($menu['icon']))
                     ->link->attr($menu['attr']);
                 } else {
-                    $m->add($menu['name'], $menu['url'])->data(['roles' => $menu['roles']])->append($this->setAppend())->prepend($this->icon($menu['icon']))->link->attr($menu['attr']);
+                    if(isset($menu['active'])){
+                        $m->add($menu['name'], $menu['url'])->active($menu['active'])->data(['roles' => $menu['roles']])->append($this->setAppend())->prepend($this->icon($menu['icon']))->link->attr($menu['attr']);
+                    } else {
+                        $m->add($menu['name'], $menu['url'])->data(['roles' => $menu['roles']])->append($this->setAppend())->prepend($this->icon($menu['icon']))->link->attr($menu['attr']);
+                    }
                 }
                 if(isset($menu['submenu'])){
                     foreach($menu['submenu'] as $submenu){

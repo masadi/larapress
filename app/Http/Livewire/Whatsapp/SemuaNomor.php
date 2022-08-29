@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Halaman;
+namespace App\Http\Livewire\Whatsapp;
 
 use Livewire\WithPagination;
 use Livewire\Component;
 use App\Models\Post;
 
-class SemuaHalaman extends Component
+class SemuaNomor extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -25,8 +25,8 @@ class SemuaHalaman extends Component
     
     public function render()
     {
-        return view('livewire.halaman.semua-halaman', [
-            'collection' => Post::where('type', 'page')->with(['user'])
+        return view('livewire.whatsapp.semua-nomor', [
+            'collection' => Post::where('type', 'post')->with(['user'])
             ->withCount('comments')
             ->orderBy($this->sortby, $this->sortbydesc)
                 ->when($this->search, function($query) {

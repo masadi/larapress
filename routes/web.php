@@ -5,6 +5,7 @@ use App\Http\Controllers\StaterkitController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FaceBookController;
+use App\Http\Controllers\WhatsappController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,34 +29,19 @@ Route::get('page/{page}', [FrontController::class, 'page'])->name('page');
 Route::get('/post/{slug}', [FrontController::class, 'artikel'])->name('baca_artikel');
 Route::get('/kategori/{slug}', [FrontController::class, 'post_kategori'])->name('kategori');
 Route::get('/tag/{slug}', [FrontController::class, 'post_tag'])->name('tag');
+Route::post('/pesan-masuk',[WhatsappController::class, 'webhook'])->name('post-webhook');
+Route::get('/pesan-masuk',[WhatsappController::class, 'webhook'])->name('get-webhook');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [StaterkitController::class, 'dashboard'])->name('dashboard');
-    Route::prefix('artikel')->name('artikel.')->group( function(){
-        Route::get('/', [StaterkitController::class, 'artikel'])->name('semua');
-        Route::get('/tambah', [StaterkitController::class, 'tambah_artikel'])->name('tambah');
-        Route::get('komentar', [StaterkitController::class, 'komentar'])->name('komentar');
-    });
-    Route::prefix('halaman')->name('halaman.')->group( function(){
-        Route::get('/', [StaterkitController::class, 'halaman'])->name('semua');
-        Route::get('/tambah', [StaterkitController::class, 'tambah_halaman'])->name('tambah');
-    });
-    Route::prefix('referensi')->name('referensi')->group( function(){
-        Route::get('/{laman}', [StaterkitController::class, 'referensi']);
-    });
-    Route::prefix('administrasi')->name('administrasi')->group( function(){
-        Route::get('/{laman}', [StaterkitController::class, 'administrasi']);
-        Route::get('/{laman}/tambah-data', [StaterkitController::class, 'administrasi_add'])->name('.add');
-    });
-    Route::prefix('keuangan')->name('keuangan')->group( function(){
-        Route::get('/{laman}', [StaterkitController::class, 'keuangan']);
-    });
-    Route::prefix('kinerja-guru')->name('kinerja-guru')->group( function(){
-        Route::get('/{laman}', [StaterkitController::class, 'kinerja_guru']);
-    });
+    Route::get('/nomor-whatsapp', [StaterkitController::class, 'nomor_whatsapp'])->name('nomor-whatsapp');
+    Route::get('/nomor-whatsapp/pesan-masuk/{id}', [StaterkitController::class, 'pesan_masuk'])->name('pesan-masuk');
+    Route::get('/campaign-message', [StaterkitController::class, 'campaign_message'])->name('campaign-message');
+    Route::get('/received-message', [StaterkitController::class, 'received_message'])->name('received-message');
+    Route::get('/auto-reply', [StaterkitController::class, 'auto_reply'])->name('auto-reply');
     Route::get('/users', [StaterkitController::class, 'users'])->name('users');
 });
 Route::get('send-mail', function () {

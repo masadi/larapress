@@ -14,16 +14,37 @@ class StaterkitController extends Controller
         ];
         return view('content.dashboard', ['breadcrumbs' => $breadcrumbs]);
     }
-    public function artikel(Request $request)
+    public function nomor_whatsapp(Request $request)
     {
-        $breadcrumbs = [
-            ['link' => "home", 'name' => "Beranda"], ['name' => "Semua Artikel"]
-        ];
-        $title = "Semua Artikel";
+        $title = "Nomor Whatsapp";
         $breadcrumbs = [
             ['link' => "home", 'name' => "Beranda"], ['name' => $title]
         ];
-        return view('content.artikel.artikel', ['breadcrumbs' => $breadcrumbs, 'title' => $title, 'laman' => 'artikel.semua-artikel']);
+        return view('content.general', ['breadcrumbs' => $breadcrumbs, 'title' => $title, 'laman' => 'whatsapp.semua-nomor']);
+    }
+    public function pesan_masuk(Request $request)
+    {
+        $title = "Pesan Masuk";
+        $breadcrumbs = [
+            ['link' => "home", 'name' => "Beranda"], ['name' => $title]
+        ];
+        return view('content.general', ['breadcrumbs' => $breadcrumbs, 'title' => $title, 'laman' => 'whatsapp.pesan-masuk']);
+    }
+    public function campaign_message()
+    {
+        $title = "Campaign";
+        $breadcrumbs = [
+            ['link' => "home", 'name' => "Beranda"], ['name' => $title]
+        ];
+        return view('content.general', ['breadcrumbs' => $breadcrumbs, 'title' => $title, 'laman' => 'whatsapp.campaign']);
+    }
+    public function auto_reply()
+    {
+        $title = "Auto Reply";
+        $breadcrumbs = [
+            ['link' => "home", 'name' => "Beranda"], ['name' => $title]
+        ];
+        return view('content.general', ['breadcrumbs' => $breadcrumbs, 'title' => $title, 'laman' => 'whatsapp.auto-reply']);
     }
     public function tambah_artikel(Request $request)
     {
